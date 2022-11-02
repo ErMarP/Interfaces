@@ -17,9 +17,11 @@
     <label class="js-range-value">1</label>Px
   </section>
 
-<canvas class="js-paint  paint-canvas" width="600" height="300"></canvas>
+  <div class="canv">
+    <canvas class="js-paint  paint-canvas" width="10" height="10"></canvas>
+  </div>
 
-  <button id="borrar" type="button">
+  <button id="borrar" type="button"> 
       <p>Borrar pizarra</p>
       <i class="fa-solid fa-trash"></i>
   </button>
@@ -39,14 +41,12 @@
 
 <script>
 
-  
-  
   const paintCanvas = document.querySelector( '.js-paint' );
-  
+  paintCanvas.width = window.innerWidth
+  paintCanvas.height = window.innerHeight - 100
+
   const context = paintCanvas.getContext( '2d' );
   context.lineCap = 'round';
-  let accion = 0;
-  let color = "Black";
 
   const procesarClickBorrar = function(event) {
     context.clearRect(0, 0, paintCanvas.clientWidth, paintCanvas.clientHeight);
@@ -82,6 +82,8 @@
 
   let x = 0, y = 0;
   let isMouseDown = false;
+  let accion = 0;
+  let color = "Black";
 
   const stopDrawing = () => { isMouseDown = false; }
   const startDrawing = event => {
@@ -119,6 +121,8 @@
 
   paintCanvas.addEventListener( 'mousedown', startDrawing );
   paintCanvas.addEventListener( 'mousemove', eraser );
+  paintCanvas.addEventListener( 'mousedown', eraser );
+  paintCanvas.addEventListener( 'mousedown', drawLine );
   paintCanvas.addEventListener( 'mousemove', drawLine );
   paintCanvas.addEventListener( 'mouseup', stopDrawing );
   paintCanvas.addEventListener( 'mouseout', stopDrawing );
